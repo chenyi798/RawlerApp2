@@ -1,6 +1,14 @@
-requests==2.31.0
-curl-cffi==0.5.10
-beautifulsoup4==4.12.2
-python-docx==1.1.0
-pillow==10.0.1
-lxml==4.9.3
+# 核心功能依赖
+requests>=2.31.0,<3.0.0
+beautifulsoup4>=4.12.3
+python-docx>=1.1.0
+Pillow>=10.3.0
+curl-cffi>=0.6.4
+
+# 打包工具（必须包含，用于生成可执行文件）
+pyinstaller>=6.8.0
+
+# 可选：提升打包兼容性的依赖（根据实际测试可调整）
+pywin32>=306; sys_platform == 'win32'  # Windows 平台额外依赖
+macholib>=1.16; sys_platform == 'darwin'  # macOS 平台额外依赖
+altgraph>=0.17.4  # 辅助 pyinstaller 处理依赖关系
