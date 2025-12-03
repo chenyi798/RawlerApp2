@@ -70,18 +70,13 @@ jobs:
       run: |
         echo "=== Starting PyInstaller build ==="
         
-        # 先创建一个简单的 spec 文件进行调试
-        pyi-makespec --name "数据采集助手" \
+        # 方法1：直接使用命令行参数（推荐）
+        echo "方法1: 直接使用命令行参数构建"
+        pyinstaller --onedir --name "数据采集助手" \
           --add-data "eastmoney_crawler.py:." \
           --add-data "pbc_crawler.py:." \
           --hidden-import=curl_cffi \
           --hidden-import=curl_cffi.requests \
-          crawler_gui.py
-        
-        echo "=== Spec file created ==="
-        
-        # 然后使用 spec 文件构建，这样可以更好地控制
-        pyinstaller --onedir \
           --hidden-import=lxml.etree \
           --hidden-import=lxml._elementpath \
           --hidden-import=PIL._tkinter_finder \
@@ -89,7 +84,7 @@ jobs:
           --hidden-import=bs4 \
           --hidden-import=tkinter \
           --clean \
-          数据采集助手.spec 2>&1 | tee build.log
+          crawler_gui.py 2>&1 | tee build.log
         
         echo "=== Build complete ==="
         echo "Build log saved to build.log"
@@ -165,18 +160,12 @@ jobs:
       run: |
         echo "=== Starting Windows PyInstaller build ==="
         
-        # 创建 spec 文件
-        pyi-makespec --name "数据采集助手" `
+        echo "方法1: 直接使用命令行参数构建"
+        pyinstaller --onedir --name "数据采集助手" `
           --add-data "eastmoney_crawler.py;." `
           --add-data "pbc_crawler.py;." `
           --hidden-import=curl_cffi `
           --hidden-import=curl_cffi.requests `
-          crawler_gui.py
-        
-        echo "=== Spec file created ==="
-        
-        # 使用 spec 文件构建
-        pyinstaller --onedir `
           --hidden-import=lxml.etree `
           --hidden-import=lxml._elementpath `
           --hidden-import=PIL._tkinter_finder `
@@ -184,7 +173,7 @@ jobs:
           --hidden-import=bs4 `
           --hidden-import=tkinter `
           --clean `
-          数据采集助手.spec 2>&1 | tee build.log
+          crawler_gui.py 2>&1 | tee build.log
         
         echo "=== Windows build complete ==="
         echo "Build log saved to build.log"
